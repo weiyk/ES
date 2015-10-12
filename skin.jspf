@@ -1,0 +1,17 @@
+<%
+	String skinPath = com.qam.web.facade.ApplicationStyle.getInstance().getDefaultStyle().getStyle_file();
+	if(skinPath==null || skinPath.length()==0){	
+		skinPath ="/common/skins/default/";
+	}
+	
+	skinPath=request.getContextPath() +skinPath;
+	String _qam_img_path = skinPath; 
+	//String css = skinPath+"methodfish.css";
+ %>
+ <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/common/rc-all.css" />
+ <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/common/jqgrid/css/ui.jqgrid.css" />
+ <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/common/skins/default/base.css" />
+ <script language="javascript">
+ 	var _rc_real_path="<%=request.getContextPath()%>";	
+	var _qam_skin_path="<%=skinPath%>";	
+</script>

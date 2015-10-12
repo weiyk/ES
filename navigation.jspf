@@ -1,0 +1,11 @@
+<%@ page language="java" contentType="text/html;charset=UTF-8"%>
+<script language="javascript">
+	try{
+		var navigationBar=document.getElementById("navigation");	
+		var locationText=getCookie("navigation");
+		if(navigationBar)
+			navigationBar.innerText=locationText+">";	
+	}catch(e){
+		alert(e);
+	}
+</script>
