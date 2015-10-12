@@ -59,16 +59,15 @@ int count=1;//获取总条数
 			<div class="clearfix mt-20">
 				<div class="fl w-230">
 					<%
-						String type = request.getParameter("type");
 									String pagess = request.getParameter("currentPage");
 									MingShi ms = new MingShi();
 									if(null != pagess)
 									{
-										ms.getMingShiIndex(type, pagess);
+										ms.getMingShiIndex(null, pagess);
 									}
 									else
 									{
-										ms.getMingShiIndex(null, "1");
+										ms.getMingShiIndex(null, "0");
 									}
 									List<TypeModel> typeList = ms.getTypeList();
 					%>
