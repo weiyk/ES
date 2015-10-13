@@ -224,10 +224,10 @@
                             				%>
                                             	<div class="grid-content-box">
                                    					 <div class="resource-name">
-														<a href="" target="_blank">
+														<a href="<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_KeShiLB&cs_KeChengBH=<%=keChengRS.getString("di_BianHao") %>">
                                                  		 <img src="<%=style%>/images/title-iconfont-shuss.png" width="177" height="200" class="tu_lei"/>
                                                  		</a>
-                                                   	 	<a href="" target="_blank">
+                                                   	 	<a href="<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_KeShiLB&cs_KeChengBH=<%=keChengRS.getString("di_BianHao") %>">
                                                    	 	 	<%=keChengRS.getString("di_XueDuan") + keChengRS.getString("di_NianJi") %>&nbsp;&nbsp;
                                                    	 	 	<%=keChengRS.getString("di_KeMu") %>&nbsp;&nbsp;
                                                    	 	 	<%=keChengRS.getString("di_JianLiR") %>
