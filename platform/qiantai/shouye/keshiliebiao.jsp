@@ -26,15 +26,19 @@
 %>
 <html>
 <head>
-<%@include file="/common/framework.jspf" %>
-<%@include file="/common/jquery.jspf" %>
+<%@ taglib uri="qamer-html" prefix="html"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="qamer-html" prefix="html"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>课时列表</title>
 <meta name="Keywords" content="">
 <meta name="Description" content="">
 <link href="<%=style%>/style/base.css" rel="stylesheet" type="text/css" />
 <link href="<%=style%>/style/main.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<%=style %>/js/base.js"></script>
+<script type="text/javascript" src="<%=style%>/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="<%=style%>/js/base.js"></script>
+<script type="text/javascript" src="<%=style%>/js/sea.js"></script>
 </head>
 <body>
 <html:dialog id="GNDH_KeShiLB" state="DHZT_ChaXun"/>
@@ -43,18 +47,17 @@
 		<p>欢迎你！ <a href="<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_LaoShiGRKJ" class="user-name blk"><%=yonghuxm %></a><%=schoolName %> <a href="<%=path%>/desktop.html" class="to-quit">退出</a></p>	</div>
 	</div>
 <!-- 头部 -->
-<div class="header">
+<div class="header green-head">
 	<div class="in-box wrap clearfix">
 		<div class="logo fl">
 			<a href="#">双轨数字学校</a>
 		</div>
 		<ul class="nav fr">
-			<li><a href="<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_JiaoXueKJ">首页</a></li>
-			<li><a href="<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_JiaoXueZB" class="cur">教学准备</a></li>
-			<li><a href="<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_JiaoShiFZ">教师发展</a></li>
-			<li><a href="<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_YingYongZX">应用中心</a></li>
-			<li><a href="<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_JiaoXueGZS">教师工作室</a></li>
-			<li><a href="<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_ZiYuanZX">资源中心</a></li>
+			<li><a href="<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_XueShengKJ" >首页</a></li>
+			<li><a href="<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_XueYiXue">学一学</a></li>
+			<li><a href="<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_DuYiDu">读一读</a></li>
+			<li><a href="<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_LianYiLian" class="cur">练一练</a></li>
+			<li><a href="<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_CeYiCe" >测一测</a></li>
 		</ul>
 	</div>
 </div>
@@ -70,9 +73,9 @@
 		String grade = kcRS.getString("di_NianJi");
 		%>
 		<div class="title-bar clearfix mt-10">
-			<h2>
+			<h3>
 				<a href="<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_KeChengZX">课程中心 </a>> <%=kcRS.getString("di_NianJiMC") + kcRS.getString("di_KeMu") %>
-			</h2>
+			</h3>
 		</div>
 		<div class="title-mybanners-enjsx clearfix mt-10">
 			<div class="mybanners-left-enjsx">
@@ -89,12 +92,12 @@
 			</div>
 		</div>
 		
-		<div>
-			<div>
-				授课教师：
+		<div style="border:1px solid #eeeeee; margin-top: 10px; padding: 5px 20px;">
+			<div style="min-height: 40px;">
+				<b>授课教师：</b>
 			</div>
-			<div>
-				课程特色：<%=kcRS.getString("di_KeChengTS") %>
+			<div style="min-height: 40px;">
+				<b>课程特色：</b><%=kcRS.getString("di_KeChengTS") %>
 			</div>
 		</div>
 	</div>
@@ -578,9 +581,9 @@
 			sql.append(" FROM JSKJ_KeCheng ");
 			// 过滤自己
 			sql.append(" WHERE NianJi ='" + grade + "' and BianHao<>'" + KCBianhao + "'");
+			sql.append(" order by jianLiR desc ");
 			sql.append(" limit 10");
 			
-			System.out.println(sql);
 			interestRS = dbm.executeQuery(sql.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -597,7 +600,7 @@
 					while (interestRS.next()) {
 					%>
 						<li>
-							<span class="list-name culum">
+							<span class="list-name">
 								<a href="<%=path%>/jspcontrolservlet?_qam_dialog=GNDH_KeShiLB&cs_KeChengBH=<%=interestRS.getString("BianHao")%>">
 									<%=interestRS.getString("NianJiMC") + interestRS.getString("KeMuMC")%>
 								</a>
