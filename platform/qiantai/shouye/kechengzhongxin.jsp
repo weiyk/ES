@@ -117,8 +117,21 @@
 			</p>
 		</div>
 	</div>
-	<!-- 头部 开始-->
-	<jsp:include page="/platform/qiantai/teacher/resource/header.jsp" />
+	<div class="header green-head">
+	<div class="in-box wrap clearfix">
+		<div class="logo fl">
+			<a href="#">双轨数字学校</a>
+		</div>
+		<ul class="nav fr">
+			<li><a href="<%=path%>/servlet/jspdispatchservlet?_qam_dialog=GNDH_XueShengKJ" >首页</a></li>
+			<li><a href="<%=path%>/servlet/jspdispatchservlet?_qam_dialog=GNDH_XueYiXue">学一学</a></li>
+			<li><a href="<%=path%>/servlet/jspdispatchservlet?_qam_dialog=GNDH_DuYiDu">读一读</a></li>
+			<li><a href="<%=path%>/servlet/jspdispatchservlet?_qam_dialog=GNDH_LianYiLian" class="cur">练一练</a></li>
+			<li><a href="<%=path%>/servlet/jspdispatchservlet?_qam_dialog=GNDH_CeYiCe" >测一测</a></li>
+		</ul>
+	</div>
+</div>
+
 	<!-- 头部结束 -->
 	<div class="wrap clearfix">
 		<div class="wrap clearfix" style="height:auto;">
