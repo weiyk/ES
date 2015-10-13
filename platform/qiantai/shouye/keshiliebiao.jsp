@@ -94,10 +94,22 @@
 		
 		<div style="border:1px solid #eeeeee; margin-top: 10px; padding: 5px 20px;">
 			<div style="min-height: 40px;">
-				<b>授课教师：</b>
+				<span style="color: #999999;vertical-align: top;">
+					授课教师：
+				</span>
+				<div style="margin-left: 10px; display: inline-block; width: 90%;">
+					<span style="color: #333333">
+						<!-- 调用接口获取教师信息 -->
+					</span>
+				</div>
 			</div>
 			<div style="min-height: 40px;">
-				<b>课程特色：</b><%=kcRS.getString("di_KeChengTS") %>
+				<span style="color: #999999;vertical-align: top;">课程特色：</span>
+				<div style="margin-left: 10px; display: inline-block; width: 90%;">
+					<span style="color: #333333">
+						<%=kcRS.getString("di_KeChengTS") %>
+					</span>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -468,7 +480,7 @@
 					while (interestRS.next()) {
 					%>
 						<li>
-							<span class="list-name">
+							<span class="list-name" style="margin-top: 15px;">
 								<a href="<%=path%>/jspcontrolservlet?_qam_dialog=GNDH_KeShiLB&cs_KeChengBH=<%=interestRS.getString("BianHao")%>">
 									<%=interestRS.getString("NianJiMC") + interestRS.getString("KeMuMC")%>
 								</a>
