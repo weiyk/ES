@@ -110,10 +110,9 @@
 		
 			<div class="kc-tab-bar zyq-fb-ywq-tlq-s clearfix">
 				<ul class="fl">
-					<li class="cur"><a href="<%= path %>/jspdispatchservlet?_qam_dialog=GNDH_KeChengLB&_qam_dialog_state=DHZT_KeChengLBCX&_dialog_submit_=GNDH_KeChengLB&cs_KeChengBH=<%=KCBianhao%>">课程列表</a></li>
-					<!--
-					<li><a href="#">讨论区</a></li>
-					<li><a href="#">作业区</a></li>
+					<li class="cur"><a href="<%= path %>/jspdispatchservlet?_qam_dialog=GNDH_KeShiLB&cs_KeChengBH=<%=KCBianhao%>">课程列表</a></li>
+					<li><a href="#">课程评论</a></li>
+					<!--<li><a href="#">作业区</a></li>
 					<li><a href="#">答疑区</a></li>
 					-->
 				</ul>
@@ -296,143 +295,12 @@
 </script>
 				
 				<div class="one-tabc hidden mt-10">
-					<div class="tlq-hdyw-zyq mt-10">
-					<div class="tlq-hdyw-zyq-title-left">
-						<div class="sub-tab">
-							<ul class="clearfix">
-								<li class="cur"><a href="javascript:;">全部</a></li>
-								<li><a href="javascript:;">精华</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="tlq-hdyw-zyq-title-right">
-						<a href="#"><div class="tlq-hdyw-zyq-title-right-cell1">发话题</div></a>						
-						<a href="#"><div class="tlq-hdyw-zyq-title-right-cell3">排序</div></a>
-						<a href="#"><div class="tlq-hdyw-zyq-title-right-xlcd">
-							<!-- 下拉菜单 begin-->
-							<div class="test-tlq-hdyw-zyq">
-					
-								<div class="the-form clearfix">
-										
-										<div class="select-box  fl">
-											<input type="hidden" value=""  class="the-val"/>
-											
-											<ul class="clearfix hidden">
-												<li><a href="javascript:;" rel="nj-1">一年级</a></li>
-												
-											</ul>
-											<div class="select-cover">
-												<span class="df-val">最新发帖</span>
-												<em class="icon-blue"></em>
-											</div>
-											<ul class="clearfix hidden">
-												<li><a href="javascript:;" rel="sxc-1">最新发帖</a></li>
-												<li><a href="javascript:;" rel="sxc-2">最后回复</a></li>
-											</ul>
-										</div>
-								</div>
-							</div>
-							<!-- 下拉菜单 end-->
-						</div></a>
-					</div>
+					<iframe width="100%" height="570px" align="top"  id="liebiao"
+					src="<%=request.getContextPath() %>/platform/qiantai/student/tiebaxx.jsp?pagesize=1&&KeChengBH=<%=KCBianhao %>"
+					style="border:none;" frameborder="0" scrolling="auto"></iframe>
 				</div>
 				
-				<!-- 章节 -->
-				<div class="mytlq-chapter">
-				
-					<ul class="clearfix">
-                      <li style="background:#f1f1f1;height:20px;">
-                          <span class="list-name" style="padding-top:0;">标题</span>
-                          <span class="jh myreview">最后回复人</span>
-                          <span class="jh myreview">回复数</span>
-                          <span class="jh myreview">发起人</span>
-                      </li>
-						<li>
-							<span class="list-name">你们平时会经常听音乐吗？</span>
-							<span class="jh myreview">晓雪<br /><span class="sj">2小时前</span></span>
-							<span class="jh myreview">10<br /><span class="sj">60</span></span>
-							<span class="jh myreview">何月<br /><span class="sj">2015/05/03</span></span>
-						</li>
-						<li>
-							<span class="list-name">大家觉得向他人介绍人或物品有趣吗？</span>
-							<span class="jh myreview">夏天<br /><span class="sj">2小时前</span></span>
-							<span class="jh myreview">5<br /><span class="sj">60</span></span>
-							<span class="jh myreview">胡晓<br /><span class="sj">2015/05/03</span></span>
-						</li>
-						<li>
-							<span class="list-name">你们是怎么介绍自己的老师的呀？</span>
-							<span class="jh myreview">何蓓蓓<br /><span class="sj">2小时前</span></span>
-							<span class="jh myreview">3<br /><span class="sj">60</span></span>
-							<span class="jh myreview">安阳<br /><span class="sj">2015/05/03</span></span>
-						</li>
-						<li>
-							<span class="list-name">大家都是怎么样学习音乐的呢？</span>
-							<span class="jh myreview">袁岳<br /><span class="sj">2小时前</span></span>
-							<span class="jh myreview">9<br /><span class="sj">60</span></span>
-							<span class="jh myreview">姜静<br /><span class="sj">2015/05/03</span></span>
-						</li>
-						<li>
-							<span class="list-name">大家有没有觉得听音乐的时候心里有种很舒适的感觉</span>
-							<span class="jh myreview">刘莎<br /><span class="sj">2小时前</span></span>
-							<span class="jh myreview">23<br /><span class="sj">60</span></span>
-							<span class="jh myreview">薇安<br /><span class="sj">2015/05/03</span></span>
-						</li>
-						<li>
-							<span class="list-name">学习音乐音乐哪一块更难学呢？</span>
-							<span class="jh myreview">天天<br /><span class="sj">2小时前</span></span>
-							<span class="jh myreview">41<br /><span class="sj">60</span></span>
-							<span class="jh myreview">田蕊<br /><span class="sj">2015/05/03</span></span>
-						</li>
-						<li>
-							<span class="list-name">我们都来谈谈对音乐学习的想法吧！</span>
-							<span class="jh myreview">胜利<br /><span class="sj">2小时前</span></span>
-							<span class="jh myreview">33<br /><span class="sj">60</span></span>
-							<span class="jh myreview">大成<br /><span class="sj">2015/05/03</span></span>
-						</li>
-						<li>
-							<span class="list-name">我们的课后合唱练习应该怎么办呢？</span>
-							<span class="jh myreview">何小红<br /><span class="sj">2小时前</span></span>
-							<span class="jh myreview">10<br /><span class="sj">60</span></span>
-							<span class="jh myreview">方林<br /><span class="sj">2015/05/03</span></span>
-						</li>
-						<li>
-							<span class="list-name">大家都是怎样学习音乐的呢？</span>
-							<span class="jh myreview">刘洋<br /><span class="sj">2小时前</span></span>
-							<span class="jh myreview">14<br /><span class="sj">60</span></span>
-							<span class="jh myreview">景甜<br /><span class="sj">2015/05/03</span></span>
-						</li>
-						<li>
-							<span class="list-name">你们喜欢音乐课吗？</span>
-							<span class="jh myreview">张张<br /><span class="sj">2小时前</span></span>
-							<span class="jh myreview">10<br /><span class="sj">60</span></span>
-							<span class="jh myreview">桃子<br /><span class="sj">2015/05/03</span></span>
-						</li>
-						<li>
-							<span class="list-name">觉得自己会的乐器太少，大家都是怎样学习乐器的呢？</span>
-							<span class="jh myreview">何小红<br /><span class="sj">2小时前</span></span>
-							<span class="jh myreview">10<br /><span class="sj">60</span></span>
-							<span class="jh myreview">天天<br /><span class="sj">2015/05/03</span></span>
-						</li>
-					</ul>
-				</div>
-				<div class="page-list clearfix">
-							<a href="#">上一页</a>
-							<a href="#" class="cur">1</a>
-							<a href="#">2</a>
-							<a href="#">3</a>
-							<a href="#">4</a>
-							<a href="#">5</a>
-							<a href="#">6</a>
-							<span>...</span>
-							<a href="#">12</a>
-							<a href="#">下一页</a>
-	
-							<span class="p-num">共11页</span>
-	
-							到 <input type="text" id="" class="jp-ip" /> 页	
-							<button type="submit" class="to-sub">确定</button>
-					</div>
-				</div>
+				<!-- 作业区域 -->
 				<div class="one-tabc hidden mt-10">
 					<div class="tlq-hdyw-zyq mt-10">
 						<div class="tlq-hdyw-zyq-title-left">
