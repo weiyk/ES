@@ -22,6 +22,7 @@
 	String KCBianhao=request.getParameter("cs_KeChengBH");
 	
 	request.setAttribute("cs_KeChengBH", request.getParameter("cs_KeChengBH"));
+	
 %>
 <html>
 <head>
@@ -60,8 +61,18 @@
 <div class="wrap clearfix">
 	<!--上半部分-->
 	<div  class="top-banner-enjsx">
+	
+		<%
+		// 课程信息
+		RecordSet kcRS = executeResult.getRecordSet("SWDY_KeChengXX");
+		kcRS.next();
+		// 年级
+		String grade = kcRS.getString("di_NianJi");
+		%>
 		<div class="title-bar clearfix mt-10">
-	  		<h2>${di_NianJi }${di_KeMu }</h2>
+			<h2>
+				<a href="<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_KeChengZX">课程中心 </a>> <%=kcRS.getString("di_NianJiMC") + kcRS.getString("di_KeMu") %>
+			</h2>
 		</div>
 		<div class="title-mybanners-enjsx clearfix mt-10">
 			<div class="mybanners-left-enjsx">
@@ -71,7 +82,7 @@
 				<div class="myclass-right-main">
 					<div class="title-dynamic">
 						<div class="title-dy">
-							<span class="title-jj mt-20">二年级音乐</span>
+							<span class="title-jj mt-20"><%=kcRS.getString("di_NianJiMC") + kcRS.getString("di_KeMu") %></span>
 						</div>
 					</div>
 				</div>
@@ -83,7 +94,7 @@
 				授课教师：
 			</div>
 			<div>
-				课程特色：
+				课程特色：<%=kcRS.getString("di_KeChengTS") %>
 			</div>
 		</div>
 	</div>
@@ -550,6 +561,31 @@
 
 	<div class="fr w-230">
 		
+		<%
+		/**
+		 * 查询可能感兴趣的课程
+		 */
+		IDataBaseAccess dbm = null;
+		ResultSet interestRS = null;
+		try {
+			dbm = ContextService.lookupDefaultDataBaseAccess();
+			dbm.openConnection();
+			// 查询集合列表
+			StringBuffer sql = new StringBuffer();
+			sql.append("Select BianHao , KeMu, NianJi ,XueDuan, ");
+			sql.append("(select zhi from qam_jiheyz where JiHeYLX='JH_KeMu' and BianMa=KeMu) as KeMuMC,");
+			sql.append("(select zhi from qam_jiheyz where JiHeYLX='JH_NianJi' and BianMa=NianJi) as NianJiMC");
+			sql.append(" FROM JSKJ_KeCheng ");
+			// 过滤自己
+			sql.append(" WHERE NianJi ='" + grade + "' and BianHao<>'" + KCBianhao + "'");
+			sql.append(" limit 10");
+			
+			System.out.println(sql);
+			interestRS = dbm.executeQuery(sql.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		%>
 		<!-- 我的全部课程 All my classes-->
 		<div class="all-myclass mt-30">
 			<div class="one-dynamic">
@@ -557,13 +593,19 @@
 					<h2>可能感兴趣的课程</h2>
 				</div>
 				<ul class="clearfix">
-					<c:forEach items="${courseMap }" var="course">
+					<%
+					while (interestRS.next()) {
+					%>
 						<li>
 							<span class="list-name culum">
-								<a href="<%=path%>/jspcontrolservlet?_qam_dialog=GNDH_KeChengLB&cs_KeChengBH=${course.key }">${course.value }</a>
+								<a href="<%=path%>/jspcontrolservlet?_qam_dialog=GNDH_KeShiLB&cs_KeChengBH=<%=interestRS.getString("BianHao")%>">
+									<%=interestRS.getString("NianJiMC") + interestRS.getString("KeMuMC")%>
+								</a>
 							</span>
 						</li>
-					</c:forEach>
+					<%
+					}
+					%>
 				</ul>
 			</div>
 		</div>
