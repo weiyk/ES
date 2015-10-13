@@ -115,7 +115,7 @@ String path=request.getContextPath()+"/servlet";
 	        <div class="my-jx <% if (firstItem) {firstItem = false;} else {out.println("mt-280");}%>">
 	            <div class="title-bar clearfix mt-20">
 	                <h2><%=entry.getValue() %></h2>
-	                <div class="rmkc-bk"><a href="#" class="td-a">查看更多>></a></div>
+	                <div class="rmkc-bk"><a href="<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_KeChengZX" class="td-a">查看更多>></a></div>
 	            </div>
       	  </div>
          	<div class="mt-20">
