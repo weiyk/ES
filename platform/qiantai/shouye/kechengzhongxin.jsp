@@ -24,43 +24,21 @@
 			"YONGHUXM");
 	//获取学校名字
 	String schoolName = (String) session.getAttribute("schoolName");
-	//imgUrl
-	String url = (String) request.getSession().getAttribute("imgUrl");
 	//资源类型
 	String keyword = request.getParameter("keyword");
-	//分页相关参数 
-	String currentPage = request.getParameter("currentPage");
+	
+	//总页数
+	int pageCount = 0;
+	String currentPage = request.getParameter("_qam_pagenumber_DHSJZ_KeChengLBCXJG");
 	if(CommonUtils.null2Blank(currentPage).length() == 0){
 		currentPage = "1";
 	}
-	//资源类别
-	String ziyuanlb=request.getParameter("ziyuanlb");
-	//媒体类型
-	String meitilx=request.getParameter("meitilx");
-	//获取搜索资源
-	ResourceHelper rshelp = new ResourceHelper();
-	List<List<String>> list = rshelp.getResourceBySearch(keyword,ziyuanlb,meitilx,currentPage,"10",null,null,null,null); 
-	List<String> list_cout=null;
-	List<String> list_res=null;
-	if(list.size()>0){
-		list_cout=list.get(0);
-		list_res=list.get(1);
-	}
 	
-	int sum=0;//总页数
-	int totalnum=0;//总条数
-	if(list_cout!=null&&list_cout.get(0)!=null){
-		totalnum=Integer.parseInt(list_cout.get(0));
-		sum=Integer.parseInt(list_cout.get(0));
-		}
-	if(sum%10==0){
-		sum=(int)sum/10;
-	}else{
-		sum=((int)sum/10)+1;
-	}
-	request.setAttribute("sum",sum);//保存至内置对象
-	//获取资源类别
-	List<List<String>> list_restype=rshelp.getType();
+	request.setAttribute("cs_ChuBanS", request.getParameter("cs_ChuBanS"));
+	request.setAttribute("cs_KeMu", request.getParameter("cs_KeMu"));
+	request.setAttribute("cs_Keyword", request.getParameter("cs_Keyword"));
+	request.setAttribute("cs_NianJi", request.getParameter("cs_NianJi"));
+	request.setAttribute("cs_XueDuan", request.getParameter("cs_XueDuan"));
 	
 	// 学段信息
 	Map<String, String> stageMap = new LinkedHashMap<String, String>();
@@ -142,59 +120,58 @@
 	<!-- 头部 开始-->
 	<jsp:include page="/platform/qiantai/teacher/resource/header.jsp" />
 	<!-- 头部结束 -->
-<html:form>
 	<div class="wrap clearfix">
 		<div class="wrap clearfix" style="height:auto;">
 			<div class="res-content">
 				<div class="layout">
-					<div class="res-search fl">
-						<div class="search-left fl">
-							<form action="" method="post" target="spare"> 
-								<input name="keyword" placeholder="请输入关键词" value="<%if(keyword!=null){out.println(keyword);} %>" onfocus="javascript:if(this.value=='请输入关键词'){this.value='';this.style.color='#666'}" onblur="javascript:if(this.value==''){this.value='请输入关键词';this.style.color='#999'}" class="search-text" type="text"/> 
-								<input class="search-button" value="资源搜索" type="submit"/> 
-							</form>
-						</div>
-					</div>
-					<div class="clear"></div>
 					<div class="sea-right fl">
+						<div class="res-search fl">
+							<div class="search-left fl">
+								<form id="searchForm" method="post"> 
+									<!-- 出版社 -->
+									<input type="hidden" name="cs_ChuBanS" id="cs_ChuBanS" value="${cs_ChuBanS }"/>
+									<!-- 科目 -->
+									<input type="hidden" name="cs_KeMu" id="cs_KeMu" value="${cs_KeMu }"/>
+									<!-- 年级 -->
+									<input type="hidden" name="cs_NianJi" id="cs_NianJi" value="${cs_NianJi }"/>
+									<!-- 学段 -->
+									<input type="hidden" name="cs_XueDuan" id="cs_XueDuan" value="${cs_XueDuan }"/>
+									<!-- 关键字 -->
+									<input name="cs_Keyword" value="${cs_Keyword }" class="search-text" type="text"/> 
+									<input class="search-button" value="搜索" type="submit"/> 
+								</form>
+							</div>
+						</div>
+					
 						<div class="search-content fl">
 							<!-- 学段 -->
 							<ul>
 								<li class="list-class">学段：</li>
-								<% if("null".equals(ziyuanlb)||ziyuanlb==null||"total".equals(ziyuanlb)){ %>
-								<li><a class="reslist-click" href="javascript:zylb_click('total')">全部</a></li>
-								<%}else{ %>
-								<li><a class="" href="javascript:zylb_click('total')">全部</a></li>
-								<%} %>
+								<li><a <c:if test="${empty cs_XueDuan }">class="reslist-click"</c:if> href="javascript:stageClick('')">全部</a></li>
 								<c:forEach items="${stageMap }" var="stage">
-									<li><a class="" href="">${stage.value }</a></li>
+									<li><a <c:if test="${cs_XueDuan == stage.key}">class="reslist-click"</c:if> href="javascript:stageClick('${stage.key }')">${stage.value }</a></li>
 								</c:forEach>
 							</ul>
 							
 							<!-- 年级 -->
 							<ul>
 								<li class="list-class">年级：</li>
-								<%if("null".equals(meitilx)||meitilx==null||"total".equals(meitilx)){ %>
-								<li><a class="reslist-click" href="javascript:mtlx_click('total')">全部</a></li>
-								<%}else{ %>
-								<li><a class="" href="javascript:mtlx_click('total')">全部</a></li>
-								<%} %>
-								
+								<li><a <c:if test="${empty cs_NianJi }">class="reslist-click"</c:if> href="javascript:gradeClick('')">全部</a></li>
 								<c:forEach items="${gradeMap }" var="grade">
-									<li><a class="" href="">${grade.value }</a></li>
+									<li><a <c:if test="${cs_NianJi == grade.key}">class="reslist-click"</c:if> href="javascript:gradeClick('${grade.key }')">${grade.value }</a></li>
 								</c:forEach>
 							</ul>
 							
 							<!-- 出版社 -->
 							<ul>
 								<li class="list-class">出版社：</li>
-								<li><a class="reslist-click"
-									href="http://localhost/hs_edu/index.php?m=resource&amp;c=index&amp;a=serach&amp;keyword=%E5%85%AD%E5%B9%B4%E7%BA%A7&amp;userType=&amp;showType=grid&amp;cateId=&amp;typeId=&amp;subjectId=&amp;gradeId=&amp;classId=&amp;chapterId=">全部</a>
+								<li><a <c:if test="${empty cs_ChuBanS }">class="reslist-click"</c:if>
+									href="javascript:publishClick('')">全部</a>
 								</li>
 								
 								<c:forEach items="${publishMap }" var="publish">
 									<li>
-										<a class="" href="">${publish.value }</a>
+										<a <c:if test="${cs_ChuBanS == publish.key}">class="reslist-click"</c:if> href="javascript:publishClick('${publish.key }')">${publish.value }</a>
 									</li>
 								</c:forEach>
 							</ul>
@@ -202,18 +179,19 @@
 							<!-- 科目 -->
 							<ul>
 								<li class="list-class">课程科目：</li>
-								<li><a class="reslist-click"
-									href="http://localhost/hs_edu/index.php?m=resource&amp;c=index&amp;a=serach&amp;keyword=%E5%85%AD%E5%B9%B4%E7%BA%A7&amp;userType=&amp;showType=grid&amp;cateId=&amp;typeId=&amp;subjectId=&amp;gradeId=&amp;classId=&amp;chapterId=">全部</a>
+								<li><a <c:if test="${empty cs_KeMu }">class="reslist-click"</c:if>
+									href="javascript:subjectClick('')">全部</a>
 								</li>
 								
 								<c:forEach items="${subjectMap }" var="subject">
-									<li><a class=""
-										href="">${subject.value }</a>
+									<li><a <c:if test="${cs_KeMu == subject.key}">class="reslist-click"</c:if>
+										href="javascript:subjectClick('${subject.key }')">${subject.value }</a>
 									</li>
 								</c:forEach>
 							</ul>
 						</div>
 
+						<html:form id="keChengForm">
 						<div class="lei_count">
 							<!--列表内容切换开始-->
 							<div class="list-content">
@@ -229,6 +207,19 @@
                             				<%
                             				// 课程列表
                             				RecordSet keChengRS = executeResult.getRecordSet("SWDY_KeChengCX");
+                            				// 总条数
+                            				long total = keChengRS.getRecordCount();
+                            				// 每页显示条数
+                            				int limit = 10;
+                            				if (total%limit == 0) {
+                            					pageCount = (int)total/limit;
+                            					if (pageCount == 0)
+                            						pageCount = 1;
+                            				} else {
+                            					pageCount = (int)total/limit + 1;
+                            				}
+                            				request.setAttribute("pageCount", pageCount);
+                            				
                             				while (keChengRS.next()) {
                             				%>
                                             	<div class="grid-content-box">
@@ -255,58 +246,61 @@
 							<!--tab结束-->
 
 							<!--翻页插件-->
+							<div class="hidden">
+								<html:self id="SWDY_KeChengCX"/>
+							</div>
 							<div class="clear"></div>
-							<input type="hidden" name="currentPage" value="<%=currentPage %>" id="currentPage"/>
-							<input type="hidden" name="keyword" value="<%=keyword %>" id="keyword"/>
-							<input type="hidden" name="ziyuanlb" value="<%=ziyuanlb %>" id="ziyuanlb"/>
-							<input type="hidden" name="meitilx" value="<%=meitilx %>" id="meitilx"/>
+							<input type="hidden" name="_qam_pagenumber_DHSJZ_ChaXunJG" value="<%=currentPage %>" id="_qam_pagenumber_DHSJZ_ChaXunJG"/>
+							<input type="hidden" id="sum" name="sum" value="<%= pageCount %>"/>
+							
 							<div class="page-list clearfix" align="center">
-		<a id="shang" href="javascript:SX(1,<%=sum%>)">上一页</a>
-		<%
-		int pages=Integer.parseInt(currentPage);
-		int length=0;
-		if(sum<=7){
-			//循环六次
-			for(int i=1;i<=sum;i++){%>
-				<a  id="page<%=i%>" href="javascript:click(<%=i%>)"><%=i%></a>
-			<%}
-		}else{
-			if(pages<=3){
-				for(int j=1;j<=7;j++){
-				%>
-					<a  id="page<%=j%>" href="javascript:click(<%=j%>)"><%=j%></a>
-				<% }
-			}else{
-				if(sum<pages+3){
-					for(int k=sum-6;k<pages-3;k++){
-						%>
-							<a  id="page<%=k%>" href="javascript:click(<%=k%>)"><%=k%></a>
-						<% 
-					}
-				}
-				if(sum>pages+3){
-					for(int k=pages-3;k<pages+4;k++){
-						%>
-							<a  id="page<%=k%>" href="javascript:click(<%=k%>)"><%=k%></a>
-						<% 
-					}
-				}else{
-					for(int k=pages-3;k<sum+1;k++){
-						%>
-							<a  id="page<%=k%>" href="javascript:click(<%=k%>)"><%=k%></a>
-						<% 
-					}
-				}
-			}%>
-		<%} %>
-		<a id="xia" href="javascript:SX(2,<%=sum%>)">下一页</a>
-		<span class="p-num">共<%=sum%>页</span> 到 <input id="wenben" type="text" class="jp-ip" /> 页	
-		<button type="button" onclick="TiaoZhuan()"  style="background:red">确定</button>
-	</div>
+							<a id="shang" href="javascript:SX(-1)">上一页</a>
+							<%
+							int pages=Integer.parseInt(currentPage);
+							int length=0;
+							if(pageCount<=7){
+								//循环六次
+								for(int i=1;i<=pageCount;i++){%>
+									<a  id="page<%=i%>" href="javascript:click(<%=i%>)"><%=i%></a>
+								<%}
+							}else{
+								if(pages<=3){
+									for(int j=1;j<=7;j++){
+									%>
+										<a  id="page<%=j%>" href="javascript:click(<%=j%>)"><%=j%></a>
+									<% }
+								}else{
+									if(pageCount<pages+3){
+										for(int k=pageCount-6;k<pages-3;k++){
+											%>
+												<a  id="page<%=k%>" href="javascript:click(<%=k%>)"><%=k%></a>
+											<% 
+										}
+									}
+									if(pageCount>pages+3){
+										for(int k=pages-3;k<pages+4;k++){
+											%>
+												<a  id="page<%=k%>" href="javascript:click(<%=k%>)"><%=k%></a>
+											<% 
+										}
+									}else{
+										for(int k=pages-3;k<pageCount+1;k++){
+											%>
+												<a  id="page<%=k%>" href="javascript:click(<%=k%>)"><%=k%></a>
+											<% 
+										}
+									}
+								}%>
+							<%} %>
+							<a id="xia" href="javascript:SX(1)">下一页</a>
+							<span class="p-num">共${pageCount }页</span> 到 <input id="pageNumber" type="text" class="jp-ip" /> 页	
+							<button type="button" onclick="TiaoZhuan()" style="height: 38px; background: #2cb4f3 none repeat scroll 0 0;">确定</button>
+						</div>
 
 							<!--翻页插件-->
 
 						</div>
+					</html:form>
 
 						<!--内容1结束-->
 
@@ -317,74 +311,110 @@
 	</div>
 
 	<div class="clear"></div>
-	</html:form>
 	<!-- 页尾 -->
 	<jsp:include page="/bottomPage.jsp" />
-	<script type="text/javascript">
-	$("img").one("error", function() {
-		$(this).attr("src", "<%=style%>/images/default.png");
-	});
+<script type="text/javascript">
+$("img").one("error", function() {
+	$(this).attr("src", "<%=style%>/images/default.png");
+});
+	
 $(function(){
 	//样式
 	$("#page"+$("#currentPage").val()).addClass("cur");
 	//给文本框赋值
 	$("#wenben").val($("#currentPage").val());
 });
+
 //提交分页
-    function pageSubmit(){
-		document.forms[0].action="<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_ZiYuanSS";
-		document.forms[0].submit();
-	}
-  //点击确定
-	function TiaoZhuan(){
-	  	var num=$("#wenben").val();
-	  	var sum='<%=sum%>';
-	  	if(Number(num)>Number(sum)){
-	  		$("#wenben").val("1");
-	  	}
-	  	var reg = new RegExp("^[0-9]*$");  
-	  	if(!reg.test(num)){
-	  		$("#wenben").val("1");
-	  	}
-	  	if(num<1){
-	  		$("#wenben").val("1");
-	  	}
-		$("#currentPage").val($("#wenben").val());
+function pageSubmit(){
+	$("#keChengForm").attr("action", "<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_KeChengZX").submit();
+}
+
+//提交分页
+function pageSubmit() {
+	$("#_qam_turnpageflag").val("true");
+	$("#keChengForm").attr("action", "<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_KeChengZX").submit();
+}
+
+	//点击确定
+	function TiaoZhuan() {
+		var num=$("#pageNumber").val();
+  	var reg = new RegExp("^[0-9]*$");  
+  	if(!reg.test(num)){
+  		// 输入的不是数字时跳转到第一页
+  		num = "1";
+  	}
+  	if($("#sum").val()==1){
+  		num = "1";
+  	}
+  	// 总页数
+  	var sum = $("#sum").val();
+  	if (parseInt(num) < 1 || parseInt(num) > sum) {
+  		num = "1";
+  	}
+		$("#_qam_pagenumber_DHSJZ_ChaXunJG").val(num);
 		//控制当前页码
 		pageSubmit();
 	}
-  //点击页码
-	function click(i){
-		$("#currentPage").val(i);
-		pageSubmit();
-  }
-  //点击资源类别
-  function zylb_click(i){
-		$("#ziyuanlb").val(i);
-		pageSubmit();
-  }
-  //点击媒体类型
-  function mtlx_click(i){
-		$("#meitilx").val(i);
-		pageSubmit();
-  }
+	
+//点击页码
+function click(i) {
+	$("#_qam_pagenumber_DHSJZ_ChaXunJG").val(i);
+	pageSubmit();
+	}
+
 //点击上一页和下一页
-function SX(e,sum){
-	var s=$("#currentPage").val();
-	if(e==1){//上一页
-		if(s>1){
-			s=s-1;
-			$("#currentPage").val(s);
-			pageSubmit();
-		}
-	}else if(e==2){//下一页 
-		if(s<sum){
-			s=parseFloat(s)+1;
-			$("#currentPage").val(s);
-			pageSubmit();
-		}
+function SX(e) {
+	// 总页数
+	var pageCount = "${pageCount}";
+	// 当前页
+	var currentPage = $("#_qam_pagenumber_DHSJZ_ChaXunJG").val();
+	// 目标页
+	var targetPage = parseInt(currentPage) + (e);
+	if (targetPage >= 1 && targetPage <= parseInt(pageCount)) {
+		$("#_qam_pagenumber_DHSJZ_ChaXunJG").val(targetPage);
+		pageSubmit();
 	}
 }
+
+$(function(){
+	var currentPage = $("#_qam_pagenumber_DHSJZ_ChaXunJG").val();
+	if (currentPage == "0") {
+		currentPage = "1";
+	}
+	//样式
+	$("#page"+$("#_qam_pagenumber_DHSJZ_ChaXunJG").val()).addClass("cur");
+	//给文本框赋值
+	$("#pageNumber").val(currentPage);
+});
+
+// 学段查询条件
+function stageClick(v) {
+	$("#cs_XueDuan").val(v);
+	search();
+}
+
+// 年级查询条件
+function gradeClick(v) {
+	$("#cs_NianJi").val(v);
+	search();
+}
+
+// 出版社查询条件
+function publishClick(v) {
+	$("#cs_ChuBanS").val(v);
+	search();
+}
+
+// 科目查询条件
+function subjectClick(v) {
+	$("#cs_KeMu").val(v);
+	search();
+}
+
+// 条件查询
+function search() {
+	$("#searchForm").attr("action", "<%=path%>/jspdispatchservlet?_qam_dialog=GNDH_KeChengZX").submit();
 }
 </script>
 </body>
